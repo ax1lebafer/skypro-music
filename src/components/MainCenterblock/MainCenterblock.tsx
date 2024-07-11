@@ -5,9 +5,9 @@ import { Filter } from "@components/Filter/Filter";
 
 export function MainCenterblock() {
   return (
-    <div className={styles.main__centerblock}>
+    <div className={styles.mainCenterblock}>
       <Search />
-      <h2 className={styles.centerblock__h2}>Треки</h2>
+      <h2 className={styles.centerblockH2}>Треки</h2>
       <Filter />
       <PlaylistContent />
     </div>

@@ -1,4 +1,4 @@
-.main__centerblock {
+.mainCenterblock {
     width: auto;
     -webkit-box-flex: 3;
     -ms-flex-positive: 3;
@@ -6,7 +6,7 @@
     padding: 20px 40px 20px 111px;
 }
 
-.centerblock__h2 {
+.centerblockH2 {
     font-style: normal;
     font-weight: 400;
     font-size: 64px;
