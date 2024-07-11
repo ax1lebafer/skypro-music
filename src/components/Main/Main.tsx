@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./Main.module.css";
-import { MainNavigation } from "../MainNavigation/MainNavigation";
-import { MainCenterblock } from "../MainCenterblock/MainCenterblock";
+import { MainNavigation } from "@components/MainNavigation/MainNavigation";
+import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
 
 export function Main() {
   return (
@@ -27,6 +27,7 @@ export function Main() {
                   alt="day's playlist"
                   width={250}
                   height={150}
+                  priority
                 />
               </a>
             </div>
