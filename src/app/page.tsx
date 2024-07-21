@@ -1,8 +1,8 @@
 import { Bar } from "@components/Bar/Bar";
 import styles from "./page.module.css";
 import { Main } from "@components/Main/Main";
-import { getTracks } from "../api/getTracksApi";
 import { TrackType } from "../types/track";
+import { getTracks } from "@api/getTracksApi";
 
 export default async function Home() {
   let tracks: TrackType[] = [];

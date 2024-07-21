@@ -4,7 +4,7 @@ import { useState } from "react";
 import { TrackType } from "../../types/track";
 import styles from "./Filter.module.css";
 import { FilterItem } from "@components/FilterItem/FilterItem";
-import { getUniqueValues } from "../../utils/getUniqueValues";
+import { getUniqueValues } from "@utils/getUniqueValues";
 
 const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
 
@@ -26,11 +26,11 @@ export function Filter({ tracks }: FilterProps) {
       return getUniqueValues(tracks, "author");
     }
 
-    if (activeFilter === "году выпуска") {
-      return getUniqueValues(tracks, "release_date");
+    if (activeFilter === "жанру") {
+      return getUniqueValues(tracks, "genre");
     }
 
-    if (activeFilter === "жанру") {
+    if (activeFilter === "году выпуска") {
       return ["По умолчанию", "Сначала новые", "Сначала старые"];
     }
 

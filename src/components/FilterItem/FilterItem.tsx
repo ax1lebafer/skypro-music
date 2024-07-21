@@ -8,18 +8,6 @@ type FilterItemProps = {
   list: string[];
 };
 
-function formatDate(dateString: string | null): string {
-  if (!dateString) return "";
-
-  const dateParts = dateString.split("-");
-  if (dateParts.length !== 3) return "";
-
-  const [year, month, day] = dateParts;
-  if (!year || !month || !day) return "";
-
-  return `${day}.${month}.${year}`;
-}
-
 export function FilterItem({
   filterName,
   isActive,
@@ -29,9 +17,6 @@ export function FilterItem({
   const filteredList = list
     .filter((item) => item !== null && item !== "" && item !== "-")
     .map((item) => {
-      if (filterName === "году выпуска" && item) {
-        return formatDate(item);
-      }
       return item;
     })
     .filter((item) => item !== "");
