@@ -3,7 +3,10 @@
 import { useState } from "react";
 import { TrackType } from "../../types/track";
 import styles from "./Filter.module.css";
-import cn from "classnames";
+import { FilterItem } from "@components/FilterItem/FilterItem";
+import { getUniqueValues } from "../../utils/getUniqueValues";
+
+const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
 
 type FilterProps = {
   tracks: TrackType[];
@@ -17,15 +20,37 @@ export function Filter({ tracks }: FilterProps) {
       prevState === filterName ? null : filterName
     );
   }
-  
+
+  function getUnique(): string[] {
+    if (activeFilter === "исполнителю") {
+      return getUniqueValues(tracks, "author");
+    }
+
+    if (activeFilter === "году выпуска") {
+      return getUniqueValues(tracks, "release_date");
+    }
+
+    if (activeFilter === "жанру") {
+      return ["По умолчанию", "Сначала новые", "Сначала старые"];
+    }
+
+    return [];
+  }
+
+  const uniqueValues = getUnique();
+
   return (
     <div className={styles.centerblockFilter}>
       <div className={styles.filterTitle}>Искать по:</div>
-      <div className={cn(styles.filterButton, styles.btnText)}>исполнителю</div>
-      <div className={cn(styles.filterButton, styles.btnText)}>
-        году выпуска
-      </div>
-      <div className={cn(styles.filterButton, styles.btnText)}>жанру</div>
+      {filterNames.map((filterName, index) => (
+        <FilterItem
+          filterName={filterName}
+          key={index}
+          isActive={activeFilter === filterName}
+          handleChangeFilter={handleChangeFilter}
+          list={uniqueValues}
+        />
+      ))}
     </div>
   );
 }
