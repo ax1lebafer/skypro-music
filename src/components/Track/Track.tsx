@@ -7,6 +7,14 @@ type TrackProps = {
 
 export function Track({ track }: TrackProps) {
   const { name, author, album, duration_in_seconds } = track;
+
+  function formatTime(seconds: number): string {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = (seconds % 60).toString().padStart(2, "0");
+
+    return `${minutes}:${remainingSeconds}`;
+  }
+
   return (
     <div className={styles.playlistItem}>
       <div className={styles.playlistTrack}>
@@ -32,11 +40,13 @@ export function Track({ track }: TrackProps) {
             {album}
           </a>
         </div>
-        <div>
+        <div className={styles.trackItem}>
           <svg className={styles.trackTimeSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
           </svg>
-          <span className={styles.trackTimeText}>{duration_in_seconds}</span>
+          <span className={styles.trackTimeText}>
+            {formatTime(duration_in_seconds)}
+          </span>
         </div>
       </div>
     </div>
