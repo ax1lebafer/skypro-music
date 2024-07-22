@@ -20,7 +20,11 @@ export default async function Home() {
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
-        <Main tracks={tracks} />
+        {errorMessage ? (
+          <div className={styles.error}>{errorMessage}</div>
+        ) : (
+          <Main tracks={tracks} />
+        )}
         <Bar />
         <footer className="footer"></footer>
       </div>
