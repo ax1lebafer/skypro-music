@@ -3,13 +3,19 @@ import styles from "./Main.module.css";
 import { MainNavigation } from "@components/MainNavigation/MainNavigation";
 import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
 import { MainSidebar } from "@components/MainSidebar/MainSidebar";
+import { TrackType } from "../../types/track";
+import { FC } from "react";
 
-export function Main() {
+type MainProps = {
+  tracks: TrackType[];
+};
+
+export const Main: FC<MainProps> = ({ tracks }) => {
   return (
     <main className={styles.main}>
       <MainNavigation />
-      <MainCenterblock />
+      <MainCenterblock tracks={tracks} />
       <MainSidebar />
     </main>
   );
-}
+};
