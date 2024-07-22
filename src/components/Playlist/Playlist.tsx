@@ -1,6 +1,7 @@
 import { Track } from "@components/Track/Track";
 import styles from "./Playlist.module.css";
-import { TrackType } from "../../types/track";
+import { TrackType } from "@models/track";
+
 
 type PlaylistProps = {
   tracks: TrackType[];

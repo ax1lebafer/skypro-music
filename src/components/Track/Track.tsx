@@ -1,4 +1,4 @@
-import { TrackType } from "../../types/track";
+import { TrackType } from "@models/track";
 import styles from "./Track.module.css";
 
 type TrackProps = {

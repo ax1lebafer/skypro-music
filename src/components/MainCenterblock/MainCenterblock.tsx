@@ -2,7 +2,7 @@ import { PlaylistContent } from "@components/PlaylistContent/PlaylistContent";
 import styles from "./MainCenterblock.module.css";
 import { Search } from "@components/Search/Search";
 import { Filter } from "@components/Filter/Filter";
-import { TrackType } from "../../types/track";
+import { TrackType } from "@models/track";
 
 type MainCenterblockProps = {
   tracks: TrackType[];
