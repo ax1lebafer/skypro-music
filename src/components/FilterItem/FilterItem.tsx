@@ -25,7 +25,9 @@ export function FilterItem({
     <div className={styles.filter}>
       <div
         onClick={() => handleChangeFilter(filterName)}
-        className={cn(styles.filterButton, styles.btnText)}
+        className={cn(styles.filterButton, styles.btnText, {
+          [styles.active]: isActive,
+        })}
       >
         {filterName}
       </div>
