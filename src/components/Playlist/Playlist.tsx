@@ -2,16 +2,16 @@ import { Track } from "@components/Track/Track";
 import styles from "./Playlist.module.css";
 import { TrackType } from "@models/track";
 
-
 type PlaylistProps = {
   tracks: TrackType[];
+  setTrack: (track: TrackType) => void;
 };
 
-export function Playlist({ tracks }: PlaylistProps) {
+export function Playlist({ tracks, setTrack }: PlaylistProps) {
   return (
     <div className={styles.contentPlaylist}>
       {tracks.map((track) => (
-        <Track track={track} key={track.id} />
+        <Track track={track} key={track.id} onClick={() => setTrack(track)} />
       ))}
     </div>
   );

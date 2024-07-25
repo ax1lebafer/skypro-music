@@ -1,10 +1,21 @@
+"use client";
+
+import { TrackType } from "@models/track";
 import styles from "./Player.module.css";
 import cn from "classnames";
+import { useRef } from "react";
 
-export function Player() {
+type PlayerProps = {
+  track: TrackType;
+};
+
+export function Player({ track }: PlayerProps) {
+  const audioRef = useRef(null);
+
   return (
     <div className={styles.player}>
       <div className={styles.playerControls}>
+        <audio ref={audioRef} src={track.track_file}></audio>
         <div className={styles.playerBtnPrev}>
           <svg className={styles.playerBtnPrevSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
