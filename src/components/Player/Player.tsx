@@ -3,7 +3,7 @@
 import { TrackType } from "@models/track";
 import styles from "./Player.module.css";
 import cn from "classnames";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type PlayerProps = {
   track: TrackType;
@@ -12,6 +12,13 @@ type PlayerProps = {
 export function Player({ track }: PlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<Boolean>(false);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  }, [track]);
 
   function togglePlay() {
     if (audioRef.current) {
