@@ -3,30 +3,54 @@
 import { TrackType } from "@models/track";
 import styles from "./Player.module.css";
 import cn from "classnames";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 type PlayerProps = {
   track: TrackType;
 };
 
 export function Player({ track }: PlayerProps) {
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<Boolean>(false);
+
+  function togglePlay() {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+    }
+    setIsPlaying((prev) => !prev);
+  }
 
   return (
     <div className={styles.player}>
       <div className={styles.playerControls}>
         <audio ref={audioRef} src={track.track_file}></audio>
         <div className={styles.playerBtnPrev}>
-          <svg className={styles.playerBtnPrevSvg}>
+          <svg
+            className={styles.playerBtnPrevSvg}
+            onClick={() => alert("Еще не реализовано!")}
+          >
             <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
           </svg>
         </div>
-        <div className={styles.playerBtnPlay}>
+        <div className={styles.playerBtnPlay} onClick={togglePlay}>
           <svg className={styles.playerBtnPlaySvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
+            <use
+              xlinkHref={
+                isPlaying
+                  ? "img/icon/sprite.svg#icon-pause"
+                  : "img/icon/sprite.svg#icon-play"
+              }
+            ></use>
           </svg>
         </div>
-        <div className={styles.playerBtnNext}>
+        <div
+          className={styles.playerBtnNext}
+          onClick={() => alert("Еще не реализовано!")}
+        >
           <svg className={styles.playerBtnNextSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
           </svg>
@@ -52,12 +76,12 @@ export function Player({ track }: PlayerProps) {
           </div>
           <div className={styles.trackPlayAuthor}>
             <a className={styles.trackPlayAuthorLink} href="http://">
-              Ты та...
+              {track.name}
             </a>
           </div>
           <div className={styles.trackPlayAlbum}>
             <a className={styles.trackPlayAlbumLink} href="http://">
-              Баста
+              {track.author}
             </a>
           </div>
         </div>
