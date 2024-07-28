@@ -13,6 +13,7 @@ export function Bar({ track }: BarProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [isLoop, setIsLoop] = useState<boolean>(false);
   const duration = audioRef.current?.duration || 0;
 
   useEffect(() => {
@@ -39,6 +40,13 @@ export function Bar({ track }: BarProps) {
     }
   }
 
+  function handleLoop() {
+    if (audioRef.current) {
+      audioRef.current.loop = !isLoop;
+      setIsLoop((prevState) => !prevState);
+    }
+  }
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
@@ -56,7 +64,13 @@ export function Bar({ track }: BarProps) {
               setCurrentTime(e.currentTarget.currentTime);
             }}
           />
-          <Player track={track} togglePlay={togglePlay} isPlaying={isPlaying} />
+          <Player
+            track={track}
+            togglePlay={togglePlay}
+            isPlaying={isPlaying}
+            handleLoop={handleLoop}
+            isLoop={isLoop}
+          />
           <Volume />
         </div>
       </div>

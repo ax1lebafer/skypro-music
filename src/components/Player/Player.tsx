@@ -8,9 +8,17 @@ type PlayerProps = {
   track: TrackType;
   togglePlay: () => void;
   isPlaying: boolean;
+  handleLoop: () => void;
+  isLoop: boolean;
 };
 
-export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
+export function Player({
+  track,
+  togglePlay,
+  isPlaying,
+  handleLoop,
+  isLoop,
+}: PlayerProps) {
   return (
     <div className={styles.player}>
       <div className={styles.playerControls}>
@@ -41,8 +49,15 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
             <use href="img/icon/sprite.svg#icon-next"></use>
           </svg>
         </div>
-        <div className={cn(styles.playerBtnRepeat, styles.btnIcon)}>
-          <svg className={styles.playerBtnRepeatSvg}>
+        <div
+          className={cn(styles.playerBtnRepeat, styles.btnIcon)}
+          onClick={handleLoop}
+        >
+          <svg
+            className={cn(styles.playerBtnRepeatSvg, {
+              [styles.active]: isLoop,
+            })}
+          >
             <use href="img/icon/sprite.svg#icon-repeat"></use>
           </svg>
         </div>

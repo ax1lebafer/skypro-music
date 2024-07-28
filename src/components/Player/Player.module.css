@@ -103,6 +103,10 @@
     stroke: #696969;
 }
 
+.active {
+    stroke: #ffffff;
+}
+
 .playerBtnShuffle {
     display: -webkit-box;
     display: -ms-flexbox;
