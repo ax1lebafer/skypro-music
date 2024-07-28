@@ -14,6 +14,7 @@ export function Bar({ track }: BarProps) {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [isLoop, setIsLoop] = useState<boolean>(false);
+  const [volume, setVolume] = useState<number>(0.5);
   const duration = audioRef.current?.duration || 0;
 
   useEffect(() => {
@@ -22,6 +23,12 @@ export function Bar({ track }: BarProps) {
       setIsPlaying(true);
     }
   }, [track]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = volume;
+    }
+  }, [volume]);
 
   function togglePlay() {
     if (audioRef.current) {
@@ -71,7 +78,10 @@ export function Bar({ track }: BarProps) {
             handleLoop={handleLoop}
             isLoop={isLoop}
           />
-          <Volume />
+          <Volume
+            value={volume}
+            onChange={(e) => setVolume(Number(e.target.value))}
+          />
         </div>
       </div>
     </div>
