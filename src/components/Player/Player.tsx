@@ -7,34 +7,14 @@ import { useEffect, useRef, useState } from "react";
 
 type PlayerProps = {
   track: TrackType;
+  togglePlay: () => void;
+  isPlaying: Boolean;
 };
 
-export function Player({ track }: PlayerProps) {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState<Boolean>(false);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  }, [track]);
-
-  function togglePlay() {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play();
-      }
-    }
-    setIsPlaying((prev) => !prev);
-  }
-
+export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
   return (
     <div className={styles.player}>
       <div className={styles.playerControls}>
-        <audio ref={audioRef} src={track.track_file}></audio>
         <div className={styles.playerBtnPrev}>
           <svg
             className={styles.playerBtnPrevSvg}
