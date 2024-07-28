@@ -1,5 +1,6 @@
 import { TrackType } from "@models/track";
 import styles from "./Track.module.css";
+import { formatTime } from "@utils/formatTime";
 
 type TrackProps = {
   track: TrackType;
@@ -8,13 +9,6 @@ type TrackProps = {
 
 export function Track({ track, onClick }: TrackProps) {
   const { name, author, album, duration_in_seconds } = track;
-
-  function formatTime(seconds: number): string {
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = (seconds % 60).toString().padStart(2, "0");
-
-    return `${minutes}:${remainingSeconds}`;
-  }
 
   return (
     <div className={styles.playlistItem} onClick={onClick}>

@@ -4,6 +4,7 @@ import { Volume } from "@components/Volume/Volume";
 import { TrackType } from "@models/track";
 import { ProgressBar } from "@components/ProgressBar/ProgressBar";
 import { useEffect, useRef, useState } from "react";
+import { formatTime } from "@utils/formatTime";
 
 type BarProps = {
   track: TrackType;
@@ -57,6 +58,9 @@ export function Bar({ track }: BarProps) {
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
+        <div className={styles.barTimer}>
+          {formatTime(currentTime)} / {formatTime(duration)}
+        </div>
         <ProgressBar
           max={duration}
           value={currentTime}
