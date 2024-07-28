@@ -67,7 +67,10 @@ export function Player({ track }: PlayerProps) {
             <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
           </svg>
         </div>
-        <div className={cn(styles.playerBtnShuffle, styles.btnIcon)}>
+        <div
+          className={cn(styles.playerBtnShuffle, styles.btnIcon)}
+          onClick={() => alert("Еще не реализовано!")}
+        >
           <svg className={styles.playerBtnShuffleSvg}>
             <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
           </svg>
