@@ -3,12 +3,11 @@
 import { TrackType } from "@models/track";
 import styles from "./Player.module.css";
 import cn from "classnames";
-import { useEffect, useRef, useState } from "react";
 
 type PlayerProps = {
   track: TrackType;
   togglePlay: () => void;
-  isPlaying: Boolean;
+  isPlaying: boolean;
 };
 
 export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
@@ -20,13 +19,13 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
             className={styles.playerBtnPrevSvg}
             onClick={() => alert("Еще не реализовано!")}
           >
-            <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
+            <use href="img/icon/sprite.svg#icon-prev"></use>
           </svg>
         </div>
         <div className={styles.playerBtnPlay} onClick={togglePlay}>
           <svg className={styles.playerBtnPlaySvg}>
             <use
-              xlinkHref={
+              href={
                 isPlaying
                   ? "img/icon/sprite.svg#icon-pause"
                   : "img/icon/sprite.svg#icon-play"
@@ -39,12 +38,12 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
           onClick={() => alert("Еще не реализовано!")}
         >
           <svg className={styles.playerBtnNextSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
+            <use href="img/icon/sprite.svg#icon-next"></use>
           </svg>
         </div>
         <div className={cn(styles.playerBtnRepeat, styles.btnIcon)}>
           <svg className={styles.playerBtnRepeatSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-repeat"></use>
+            <use href="img/icon/sprite.svg#icon-repeat"></use>
           </svg>
         </div>
         <div
@@ -52,7 +51,7 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
           onClick={() => alert("Еще не реализовано!")}
         >
           <svg className={styles.playerBtnShuffleSvg}>
-            <use xlinkHref="img/icon/sprite.svg#icon-shuffle"></use>
+            <use href="img/icon/sprite.svg#icon-shuffle"></use>
           </svg>
         </div>
       </div>
@@ -61,7 +60,7 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
         <div className={styles.trackPlayContain}>
           <div className={styles.trackPlayImage}>
             <svg className={styles.trackPlaySvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use href="img/icon/sprite.svg#icon-note"></use>
             </svg>
           </div>
           <div className={styles.trackPlayAuthor}>
@@ -79,12 +78,12 @@ export function Player({ track, togglePlay, isPlaying }: PlayerProps) {
         <div className={styles.trackPlayLikeDis}>
           <div className={cn(styles.trackPlayLike, styles.btnIcon)}>
             <svg className={styles.trackPlayLikeSvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+              <use href="img/icon/sprite.svg#icon-like"></use>
             </svg>
           </div>
           <div className={cn(styles.trackPlayDislike, styles.btnIcon)}>
             <svg className={styles.trackPlayDislikeSvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+              <use href="img/icon/sprite.svg#icon-dislike"></use>
             </svg>
           </div>
         </div>

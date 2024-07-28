@@ -11,7 +11,9 @@ type BarProps = {
 
 export function Bar({ track }: BarProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const [isPlaying, setIsPlaying] = useState<Boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const duration = audioRef.current?.duration || 0;
 
   useEffect(() => {
     if (audioRef.current) {
@@ -31,12 +33,29 @@ export function Bar({ track }: BarProps) {
     setIsPlaying((prev) => !prev);
   }
 
+  function handleSeek(event: React.ChangeEvent<HTMLInputElement>) {
+    if (audioRef.current) {
+      audioRef.current.currentTime = Number(event.target.value);
+    }
+  }
+
   return (
     <div className={styles.bar}>
       <div className={styles.barContent}>
-        <ProgressBar />
+        <ProgressBar
+          max={duration}
+          value={currentTime}
+          step={0.01}
+          onChange={handleSeek}
+        />
         <div className={styles.barPlayerBlock}>
-          <audio ref={audioRef} src={track.track_file}></audio>
+          <audio
+            ref={audioRef}
+            src={track.track_file}
+            onTimeUpdate={(e) => {
+              setCurrentTime(e.currentTarget.currentTime);
+            }}
+          />
           <Player track={track} togglePlay={togglePlay} isPlaying={isPlaying} />
           <Volume />
         </div>
