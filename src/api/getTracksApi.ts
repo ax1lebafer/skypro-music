@@ -1,4 +1,4 @@
-const hostGet = "https://skypro-music-api.skyeng.tech/catalog/track/all/";
+const hostGet = "https://webdev-music-003b5b991590.herokuapp.com/catalog/track/all/";
 
 export async function getTracks() {
   const response = await fetch(hostGet, {
@@ -10,5 +10,5 @@ export async function getTracks() {
   }
 
   const data = await response.json();
-  return data;
+  return data.data;
 }

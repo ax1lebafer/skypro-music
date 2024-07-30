@@ -16,10 +16,9 @@
     flex-direction: column;
 }
 
-.barPlayerProgress {
-    width: 100%;
-    height: 5px;
-    background: #2e2e2e;
+.barTimer {
+    text-align: end;
+    margin-right: 20px;
 }
 
 .barPlayerBlock {
