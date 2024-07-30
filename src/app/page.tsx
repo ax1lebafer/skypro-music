@@ -22,8 +22,6 @@ export default function Home() {
       });
   }, []);
 
-  console.log(tracks);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
