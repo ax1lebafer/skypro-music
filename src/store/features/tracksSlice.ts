@@ -42,7 +42,9 @@ const playlistSlice = createSlice({
       state.currentTrack = playlist[currentIndex + 1];
     },
     setPrevTrack: (state) => {
-      const playlist = state.isShuffle ? state.playlist : state.initialPlaylist;
+      const playlist = state.isShuffle
+        ? [...state.initialPlaylist].sort(() => Math.random() - 0.5)
+        : state.initialPlaylist;
       const currentIndex = playlist.findIndex(
         (track) => track._id === state.currentTrack?._id
       );

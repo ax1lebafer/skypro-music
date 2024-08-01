@@ -35,14 +35,21 @@ export function Player({
       ? [...initialPlaylist].sort(() => Math.random() - 0.5)
       : initialPlaylist;
     const currentIndex = playlist.findIndex((t) => t._id === track?._id);
-    
+
     if (currentIndex < playlist.length - 1) {
       dispatch(setNextTrack());
     }
   };
 
   const prevTrack = () => {
-    dispatch(setPrevTrack());
+    const playlist = isShuffle
+      ? [...initialPlaylist].sort(() => Math.random() - 0.5)
+      : initialPlaylist;
+    const currentIndex = playlist.findIndex((t) => t._id === track?._id);
+
+    if (currentIndex > 0) {
+      dispatch(setPrevTrack());
+    }
   };
 
   const toggleShuffle = () => {
