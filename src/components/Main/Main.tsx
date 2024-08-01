@@ -7,14 +7,13 @@ import { TrackType } from "@models/track";
 
 type MainProps = {
   tracks: TrackType[];
-  setTrack: (track: TrackType) => void;
 };
 
-export const Main: FC<MainProps> = ({ tracks, setTrack }) => {
+export const Main: FC<MainProps> = ({ tracks }) => {
   return (
     <main className={styles.main}>
       <MainNavigation />
-      <MainCenterblock tracks={tracks} setTrack={setTrack} />
+      <MainCenterblock tracks={tracks} />
       <MainSidebar />
     </main>
   );

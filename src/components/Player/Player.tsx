@@ -3,9 +3,15 @@
 import { TrackType } from "@models/track";
 import styles from "./Player.module.css";
 import cn from "classnames";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import {
+  setIsShuffle,
+  setNextTrack,
+  setPrevTrack,
+} from "@features/tracksSlice";
 
 type PlayerProps = {
-  track: TrackType;
+  track: TrackType | null;
   togglePlay: () => void;
   isPlaying: boolean;
   handleLoop: () => void;
@@ -19,14 +25,26 @@ export function Player({
   handleLoop,
   isLoop,
 }: PlayerProps) {
+  const dispatch = useAppDispatch();
+  const { isShuffle } = useAppSelector((state) => state.playlist);
+
+  const nextTrack = () => {
+    dispatch(setNextTrack());
+  };
+
+  const prevTrack = () => {
+    dispatch(setPrevTrack());
+  };
+
+  const toggleShuffle = () => {
+    dispatch(setIsShuffle(isShuffle ? false : true));
+  };
+
   return (
     <div className={styles.player}>
       <div className={styles.playerControls}>
         <div className={styles.playerBtnPrev}>
-          <svg
-            className={styles.playerBtnPrevSvg}
-            onClick={() => alert("Еще не реализовано!")}
-          >
+          <svg className={styles.playerBtnPrevSvg} onClick={prevTrack}>
             <use href="img/icon/sprite.svg#icon-prev"></use>
           </svg>
         </div>
@@ -41,10 +59,7 @@ export function Player({
             ></use>
           </svg>
         </div>
-        <div
-          className={styles.playerBtnNext}
-          onClick={() => alert("Еще не реализовано!")}
-        >
+        <div className={styles.playerBtnNext} onClick={nextTrack}>
           <svg className={styles.playerBtnNextSvg}>
             <use href="img/icon/sprite.svg#icon-next"></use>
           </svg>
@@ -63,7 +78,7 @@ export function Player({
         </div>
         <div
           className={cn(styles.playerBtnShuffle, styles.btnIcon)}
-          onClick={() => alert("Еще не реализовано!")}
+          onClick={toggleShuffle}
         >
           <svg className={styles.playerBtnShuffleSvg}>
             <use href="img/icon/sprite.svg#icon-shuffle"></use>
@@ -80,12 +95,12 @@ export function Player({
           </div>
           <div className={styles.trackPlayAuthor}>
             <a className={styles.trackPlayAuthorLink} href="http://">
-              {track.name}
+              {track?.name}
             </a>
           </div>
           <div className={styles.trackPlayAlbum}>
             <a className={styles.trackPlayAlbumLink} href="http://">
-              {track.author}
+              {track?.author}
             </a>
           </div>
         </div>
