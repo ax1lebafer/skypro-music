@@ -26,10 +26,19 @@ export function Player({
   isLoop,
 }: PlayerProps) {
   const dispatch = useAppDispatch();
-  const { isShuffle } = useAppSelector((state) => state.playlist);
+  const { isShuffle, initialPlaylist } = useAppSelector(
+    (state) => state.playlist
+  );
 
   const nextTrack = () => {
-    dispatch(setNextTrack());
+    const playlist = isShuffle
+      ? [...initialPlaylist].sort(() => Math.random() - 0.5)
+      : initialPlaylist;
+    const currentIndex = playlist.findIndex((t) => t._id === track?._id);
+    
+    if (currentIndex < playlist.length - 1) {
+      dispatch(setNextTrack());
+    }
   };
 
   const prevTrack = () => {
@@ -80,7 +89,11 @@ export function Player({
           className={cn(styles.playerBtnShuffle, styles.btnIcon)}
           onClick={toggleShuffle}
         >
-          <svg className={styles.playerBtnShuffleSvg}>
+          <svg
+            className={cn(styles.playerBtnShuffleSvg, {
+              [styles.active]: isShuffle,
+            })}
+          >
             <use href="img/icon/sprite.svg#icon-shuffle"></use>
           </svg>
         </div>

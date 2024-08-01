@@ -21,36 +21,52 @@ export function Bar() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const audio = audioRef.current;
+  const audio = audioRef.current;
 
     if (audio) {
-      audio.play();
-      dispatch(setIsPlaying(true));
+      if (track) {
+        audio.src = track.track_file;
+        audio.play();
+        dispatch(setIsPlaying(true));
+      }
     }
   }, [track, dispatch]);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
+    const audio = audioRef.current;
+
+    if (audio) {
+      audio.volume = volume;
     }
   }, [volume]);
 
   useEffect(() => {
     const audio = audioRef.current;
 
+    const handleEnded = () => {
+      dispatch(setNextTrack());
+    };
+
     if (audio) {
-      audio.addEventListener("ended", () => {
-        dispatch(setNextTrack());
-      });
+      audio.addEventListener("ended", handleEnded);
     }
+
     return () => {
       if (audio) {
-        audio.removeEventListener("ended", () => {
-          dispatch(setNextTrack());
-        });
+        audio.removeEventListener("ended", handleEnded);
       }
     };
   }, [track, dispatch]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isPlaying]);
 
   if (!track) {
     return null;
