@@ -139,18 +139,25 @@
 }
 
 .active {
-    animation-name: blinker;
+    animation-name: pulse;
     animation-iteration-count: infinite;
-    animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+    animation-timing-function: cubic-bezier(0.66, 0, 0, 1);
     animation-duration: 1s;
 }
 
-@keyframes blinker {
-    from {
-        opacity: 1.0;
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        opacity: 1;
     }
 
-    to {
-        opacity: 0.0;
+    50% {
+        transform: scale(1.5);
+        opacity: 0.5;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
