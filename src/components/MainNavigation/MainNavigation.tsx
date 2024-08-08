@@ -3,6 +3,7 @@
 import Image from "next/image";
 import styles from "./MainNavigation.module.css";
 import { useState } from "react";
+import Link from "next/link";
 
 export function MainNavigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,9 +41,9 @@ export function MainNavigation() {
               </a>
             </li>
             <li className={styles.menuItem}>
-              <a href="../signin.html" className={styles.menuLink}>
+              <Link href="/signin" className={styles.menuLink}>
                 Войти
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
