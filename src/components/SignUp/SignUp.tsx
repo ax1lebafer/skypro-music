@@ -33,9 +33,9 @@ export function SignUp() {
             />
             <input
               className={styles.modalInput}
-              type="password"
-              name="password"
-              placeholder="Повторите пароль"
+              type="text"
+              name="username"
+              placeholder="Имя пользователя"
             />
             <button className={styles.modalBtnSignupEnt}>
               Зарегистрироваться
