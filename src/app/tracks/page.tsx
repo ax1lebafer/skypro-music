@@ -21,7 +21,7 @@ export default async function Home() {
       {errorMessage ? (
         <div className={styles.error}>{errorMessage}</div>
       ) : (
-        <MainCenterblock tracks={tracks} />
+        <MainCenterblock tracks={tracks} title={"Все треки"} />
       )}
     </>
   );

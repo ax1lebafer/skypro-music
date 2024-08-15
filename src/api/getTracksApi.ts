@@ -70,3 +70,17 @@ export async function removeLikeTrack(token: string, id: number) {
   const data = await response.json();
   return data.data;
 }
+
+export async function getSelectionTracks(id: string) {
+  const fullId = Number(id) + 1;
+  const response = await fetch(
+    `https://webdev-music-003b5b991590.herokuapp.com/catalog/selection/${fullId}/`
+  );
+
+  if (!response.ok) {
+    throw new Error("Ошибка получения");
+  }
+
+  const data = await response.json();
+  return data.data;
+}

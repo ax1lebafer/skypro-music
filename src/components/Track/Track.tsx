@@ -31,7 +31,7 @@ export function Track({ track, tracks }: TrackProps) {
         <div className={styles.trackTitle}>
           <div className={styles.trackTitleImage}>
             <svg className={styles.trackTitleSvg}>
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
             </svg>
           </div>
           {conditionCurrentTrack && (
@@ -55,7 +55,7 @@ export function Track({ track, tracks }: TrackProps) {
           <div onClick={handleLike}>
             <svg className={styles.trackTimeSvg}>
               <use
-                xlinkHref={`img/icon/sprite.svg#icon-${
+                xlinkHref={`/img/icon/sprite.svg#icon-${
                   isLiked ? "like" : "dislike"
                 }`}
               ></use>
