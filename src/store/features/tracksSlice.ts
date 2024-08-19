@@ -1,4 +1,4 @@
-import { fetchFavoriteTracks } from "@api/getTracksApi";
+import { fetchFavoriteTracks } from "@api/tracksApi";
 import { TrackType } from "@models/track";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 

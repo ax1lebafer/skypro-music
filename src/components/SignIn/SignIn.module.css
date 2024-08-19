@@ -52,16 +52,21 @@
     -ms-flex-align: center;
     align-items: center;
     padding: 43px 47px 47px 40px;
+    justify-content: space-between;
+    gap: 20px;
 }
 
-.modalFormLogin input:first-child {
-    margin-bottom: 30px;
+.modalFormTop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 35px;
+    width: 100%;
 }
 
 .modalLogo {
     width: 140px;
     height: 21px;
-    margin-bottom: 34px;
     background-color: transparent;
 }
 
@@ -117,6 +122,18 @@
     color: #d0cece;
 }
 
+.modalFormBottom {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.error {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}
+
 .modalBtnEnter {
     width: 278px;
     height: 52px;
@@ -124,8 +141,6 @@
     font-size: 18px;
     background-color: #580ea2;
     border-radius: 6px;
-    margin-top: 60px;
-    margin-bottom: 20px;
     border: none;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -199,8 +214,4 @@
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-}
-
-.login {
-    margin-bottom: 30px;
 }

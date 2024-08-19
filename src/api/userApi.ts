@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const loginUrl = "https://webdev-music-003b5b991590.herokuapp.com/user/login/";
 const registerUrl =
   "https://webdev-music-003b5b991590.herokuapp.com/user/signup/";
+const tokenUrl = "https://webdev-music-003b5b991590.herokuapp.com/user/token/";
 
 type LoginProps = {
   email: string;
@@ -15,67 +16,62 @@ type RegisterProps = {
   username: string;
 };
 
-export const signIn = createAsyncThunk(
-  "user/login",
-  async ({ email, password }: LoginProps) => {
-    const response = await fetch(loginUrl, {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+export async function login({ email, password }: LoginProps) {
+  const response = await fetch(loginUrl, {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
 
-    const json = await response.json();
-    if (!response.ok) {
-      throw new Error(json.detail);
-    }
-
-    return json;
+  if (!response.ok && response.status === 401) {
+    throw new Error("Неверный логин или пароль");
+  } else if (!response.ok && response.status === 400) {
+    throw new Error("Запрос составлен некорректно");
+  } else if (!response.ok && response.status === 412) {
+    throw new Error("Данные в неверном формате");
+  } else if (!response.ok && response.status === 500) {
+    throw new Error("Ошибка соединения");
   }
-);
 
-export const signUp = createAsyncThunk(
-  "user/register",
-  async ({ email, password, username }: RegisterProps) => {
-    const response = await fetch(registerUrl, {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-        username,
-      }),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
+  const data = await response.json();
+  return data;
+}
 
-    const json = await response.json();
+export async function register({ email, password, username }: RegisterProps) {
+  const response = await fetch(registerUrl, {
+    method: "POST",
+    body: JSON.stringify({ email, password, username }),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
 
-    if (!response.ok) {
-      throw new Error(json.detail);
-    }
-
-    return json;
+  if (!response.ok && response.status === 403) {
+    throw new Error("Введенный email уже занят");
+  } else if (!response.ok && response.status === 500) {
+    throw new Error("Ошибка соединения");
   }
-);
 
-export const fetchToken = async ({ email, password }: LoginProps) => {
-  const response = await fetch(
-    "https://webdev-music-003b5b991590.herokuapp.com/user/token/",
-    {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: {
-        "content-type": "application/json",
-      },
-    }
-  );
+  const data = await response.json();
+  return data;
+}
 
-  const json = await response.json();
+export async function fetchToken({ email, password }: LoginProps) {
+  const response = await fetch(tokenUrl, {
+    method: "POST",
+    body: JSON.stringify({ email, password }),
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+
+  const data = await response.json();
+
   if (!response.ok) {
-    throw new Error(json.detail);
+    throw new Error(data.detail);
   }
 
-  return json;
-};
+  return data;
+}

@@ -37,11 +37,13 @@ export function MainNavigation() {
                 Главное
               </Link>
             </li>
-            <li className={styles.menuItem}>
-              <Link href="/tracks/favorite" className={styles.menuLink}>
-                Мой плейлист
-              </Link>
-            </li>
+            {isAuth && (
+              <li className={styles.menuItem}>
+                <Link href="/tracks/favorite" className={styles.menuLink}>
+                  Мой плейлист
+                </Link>
+              </li>
+            )}
             {!isAuth && (
               <li className={styles.menuItem}>
                 <Link href="/signin" className={styles.menuLink}>

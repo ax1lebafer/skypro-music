@@ -1,6 +1,6 @@
 "use client";
 
-import { getSelectionTracks, getTracks } from "@api/getTracksApi";
+import { getSelectionTracks, getTracks } from "@api/tracksApi";
 import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
 import { TrackType } from "@models/track";
 import { useParams } from "next/navigation";

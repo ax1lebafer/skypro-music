@@ -6,9 +6,7 @@ import styles from "./SignUp.module.css";
 import { useRouter } from "next/navigation";
 import { useAppDispatch } from "../../store/store";
 import React, { useState } from "react";
-import { signUp } from "@api/userApi";
-import { getToken } from "@features/userSlice";
-import { register } from "module";
+import { getToken, signUp } from "@features/userSlice";
 
 export function SignUp() {
   const router = useRouter();
@@ -27,26 +25,31 @@ export function SignUp() {
 
   async function signup(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (!userData.email || !userData.password || !userData.username) {
+      setError("Заполните все поля");
+      return;
+    }
+
+    if (userData.password.length < 6) {
+      setError("Пароль должен быть больше 6 символов");
+      return;
+    }
+
+    if (userData.username.length < 3) {
+      setError("Имя пользователя должно быть больше 3 символов");
+      return;
+    }
+
     try {
-      if (!userData.email || !userData.password || !userData.username) {
-        setError("Заполните все поля");
-        return;
-      }
-
-      if (userData.password.length < 6) {
-        setError("Пароль должен быть больше 6 символов");
-        return;
-      }
-
-      await dispatch(signUp(userData));
-      await dispatch(getToken(userData));
+      setError("");
+      await dispatch(signUp(userData)).unwrap();
+      await dispatch(getToken(userData)).unwrap();
       router.push("/signin");
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError(error.message);
     }
   }
-
-  console.log(userData);
 
   return (
     <div className={styles.wrapper}>
