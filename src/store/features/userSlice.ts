@@ -1,4 +1,4 @@
-import { fetchToken, signIn } from "@api/login";
+import { fetchToken, signIn, signUp } from "@api/userApi";
 import { TokenType } from "@models/token";
 import { UserType } from "@models/user";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
@@ -31,6 +31,9 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(signUp.fulfilled, (state, action) => {
         state.user = action.payload;
       })
       .addCase(getToken.fulfilled, (state, action) => {

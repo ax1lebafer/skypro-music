@@ -1,6 +1,6 @@
 import styles from "./page.module.css";
 import { TrackType } from "../../types/track";
-import { getTracks } from "@api/getTracksApi";
+import { getTracks } from "@api/tracksApi";
 import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
 
 export default async function Home() {

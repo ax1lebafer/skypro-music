@@ -6,7 +6,7 @@ import cn from "classnames";
 import Link from "next/link";
 import { useState } from "react";
 import { useAppDispatch } from "../../store/store";
-import { signIn } from "@api/login";
+import { signIn } from "@api/userApi";
 import { getToken } from "@features/userSlice";
 import { useRouter } from "next/navigation";
 
