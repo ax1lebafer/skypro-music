@@ -10,6 +10,7 @@ import {
   setPrevTrack,
 } from "@features/tracksSlice";
 import { useLikeTrack } from "../../hooks/useLikeTrack";
+import { useState } from "react";
 
 type PlayerProps = {
   track: TrackType | null;
@@ -25,6 +26,17 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
   );
 
   const { isLiked, handleLike } = useLikeTrack(track!);
+
+  const [animateLike, setAnimateLike] = useState(false);
+
+  function handleLikeClick(event: React.MouseEvent<HTMLDivElement>) {
+    setAnimateLike(true);
+    handleLike(event);
+
+    setTimeout(() => {
+      setAnimateLike(false);
+    }, 300);
+  }
 
   const nextTrack = () => {
     const playlist = isShuffle
@@ -123,8 +135,11 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
 
         <div className={styles.trackPlayLikeDis}>
           <div
-            className={cn(styles.trackPlayLike, styles.btnIcon)}
-            onClick={handleLike}
+            className={cn(styles.trackPlayLike, styles.btnIcon, {
+              [styles.liked]: isLiked && animateLike,
+              [styles.disliked]: !isLiked && animateLike,
+            })}
+            onClick={handleLikeClick}
           >
             <svg className={styles.trackPlayLikeSvg}>
               <use
