@@ -9,8 +9,9 @@ import React, { useState } from "react";
 import { getToken, signUp } from "@features/userSlice";
 
 export function SignUp() {
-  const router = useRouter();
   const dispatch = useAppDispatch();
+
+  const router = useRouter();
   const [error, setError] = useState("");
   const [userData, setUserData] = useState({
     email: "",
@@ -56,38 +57,40 @@ export function SignUp() {
       <div className={styles.containerSignup}>
         <div className={styles.modalBlock}>
           <form className={styles.modalFormLogin} onSubmit={signup}>
-            <Link href="/">
-              <div className={styles.modalLogo}>
-                <Image
-                  className={styles.modalLogoImage}
-                  src="/img/logo_modal.png"
-                  alt="logo"
-                  width={140}
-                  height={21}
-                />
-              </div>
-            </Link>
-            <input
-              className={styles.modalInput}
-              type="email"
-              name="email"
-              placeholder="Почта"
-              onChange={handleChangeInput}
-            />
-            <input
-              className={styles.modalInput}
-              type="password"
-              name="password"
-              placeholder="Пароль"
-              onChange={handleChangeInput}
-            />
-            <input
-              className={styles.modalInput}
-              type="text"
-              name="username"
-              placeholder="Имя пользователя"
-              onChange={handleChangeInput}
-            />
+            <div className={styles.modalFormTop}>
+              <Link href="/">
+                <div className={styles.modalLogo}>
+                  <Image
+                    className={styles.modalLogoImage}
+                    src="/img/logo_modal.png"
+                    alt="logo"
+                    width={140}
+                    height={21}
+                  />
+                </div>
+              </Link>
+              <input
+                className={styles.modalInput}
+                type="email"
+                name="email"
+                placeholder="Почта"
+                onChange={handleChangeInput}
+              />
+              <input
+                className={styles.modalInput}
+                type="password"
+                name="password"
+                placeholder="Пароль"
+                onChange={handleChangeInput}
+              />
+              <input
+                className={styles.modalInput}
+                type="text"
+                name="username"
+                placeholder="Имя пользователя"
+                onChange={handleChangeInput}
+              />
+            </div>
             {error && <div className={styles.error}>{error}</div>}
             <button className={styles.modalBtnSignupEnt}>
               Зарегистрироваться

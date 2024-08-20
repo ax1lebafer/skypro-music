@@ -7,21 +7,26 @@ import { ProgressBar } from "@components/ProgressBar/ProgressBar";
 import { useEffect, useRef, useState } from "react";
 import { formatTime } from "@utils/formatTime";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setIsPlaying, setNextTrack } from "@features/tracksSlice";
+import { setIsPlaying, setNextTrack, setIsLoop } from "@features/tracksSlice";
 
 export function Bar() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [currentTime, setCurrentTime] = useState<number>(0);
-  const [isLoop, setIsLoop] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(0.5);
-  const duration = audioRef.current?.duration || 0;
-  const { currentTrack: track, isPlaying } = useAppSelector(
-    (state) => state.playlist
-  );
   const dispatch = useAppDispatch();
+  
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [volume, setVolume] = useState<number>(0.5);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  const duration = audioRef.current?.duration || 0;
+
+  const {
+    currentTrack: track,
+    isPlaying,
+    isLoop,
+  } = useAppSelector((state) => state.playlist);
 
   useEffect(() => {
-  const audio = audioRef.current;
+    const audio = audioRef.current;
 
     if (audio) {
       if (track) {
@@ -93,7 +98,7 @@ export function Bar() {
   function handleLoop() {
     if (audioRef.current) {
       audioRef.current.loop = !isLoop;
-      setIsLoop((prevState) => !prevState);
+      dispatch(setIsLoop(!isLoop));
     }
   }
 
@@ -120,9 +125,7 @@ export function Bar() {
           <Player
             track={track}
             togglePlay={togglePlay}
-            isPlaying={isPlaying}
             handleLoop={handleLoop}
-            isLoop={isLoop}
           />
           <Volume
             value={volume}

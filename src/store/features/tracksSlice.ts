@@ -17,6 +17,7 @@ type PlaylistStateType = {
   playlist: TrackType[];
   isPlaying: boolean;
   isShuffle: boolean;
+  isLoop: boolean;
   likedTracks: TrackType[];
 };
 const initialState: PlaylistStateType = {
@@ -25,6 +26,7 @@ const initialState: PlaylistStateType = {
   playlist: [],
   isPlaying: false,
   isShuffle: false,
+  isLoop: false,
   likedTracks: [],
 };
 
@@ -75,6 +77,9 @@ const playlistSlice = createSlice({
       );
       state.isShuffle = action.payload;
     },
+    setIsLoop: (state, action: PayloadAction<boolean>) => {
+      state.isLoop = action.payload;
+    },
     setLike: (state, action: PayloadAction<TrackType>) => {
       state.likedTracks.push(action.payload);
     },
@@ -99,5 +104,6 @@ export const {
   setIsShuffle,
   setDislike,
   setLike,
+  setIsLoop,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;

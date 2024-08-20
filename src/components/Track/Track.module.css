@@ -105,6 +105,10 @@
     width: 66px;
 }
 
+.trackTime {
+    cursor: pointer;
+}
+
 .trackAlbumLink {
     font-style: normal;
     font-weight: 400;
