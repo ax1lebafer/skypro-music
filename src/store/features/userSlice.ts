@@ -30,7 +30,7 @@ export const signUp = createAsyncThunk(
 );
 
 function getUserFromStorage() {
-  if (localStorage.getItem("user") !== null) {
+  if (typeof window !== "undefined" && localStorage.getItem("user") !== null) {
     return JSON.parse(localStorage.getItem("user")!);
   } else {
     return null;
@@ -38,7 +38,7 @@ function getUserFromStorage() {
 }
 
 function getTokensFromStorage() {
-  if (localStorage.getItem("tokens") !== null) {
+  if (typeof window !== "undefined" && localStorage.getItem("tokens") !== null) {
     return JSON.parse(localStorage.getItem("tokens")!);
   } else {
     return null;
