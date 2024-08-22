@@ -1,3 +1,39 @@
+@keyframes likeAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes dislikeAnimation {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.5);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.liked {
+    animation: likeAnimation 0.3s ease-in-out;
+}
+
+.disliked {
+    animation: dislikeAnimation 0.3s ease-in-out;
+}
+
 .playlistItem {
     width: 100%;
     display: block;
@@ -100,9 +136,13 @@
 
 .trackItem {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     align-items: center;
     width: 66px;
+}
+
+.trackTime {
+    cursor: pointer;
 }
 
 .trackAlbumLink {

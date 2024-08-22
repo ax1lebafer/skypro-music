@@ -9,26 +9,34 @@ import {
   setNextTrack,
   setPrevTrack,
 } from "@features/tracksSlice";
+import { useLikeTrack } from "../../hooks/useLikeTrack";
+import { useState } from "react";
 
 type PlayerProps = {
   track: TrackType | null;
   togglePlay: () => void;
-  isPlaying: boolean;
   handleLoop: () => void;
-  isLoop: boolean;
 };
 
-export function Player({
-  track,
-  togglePlay,
-  isPlaying,
-  handleLoop,
-  isLoop,
-}: PlayerProps) {
+export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
   const dispatch = useAppDispatch();
-  const { isShuffle, initialPlaylist } = useAppSelector(
+
+  const { isShuffle, initialPlaylist, isPlaying, isLoop } = useAppSelector(
     (state) => state.playlist
   );
+
+  const { isLiked, handleLike } = useLikeTrack(track!);
+
+  const [animateLike, setAnimateLike] = useState(false);
+
+  function handleLikeClick(event: React.MouseEvent<HTMLDivElement>) {
+    setAnimateLike(true);
+    handleLike(event);
+
+    setTimeout(() => {
+      setAnimateLike(false);
+    }, 300);
+  }
 
   const nextTrack = () => {
     const playlist = isShuffle
@@ -126,14 +134,19 @@ export function Player({
         </div>
 
         <div className={styles.trackPlayLikeDis}>
-          <div className={cn(styles.trackPlayLike, styles.btnIcon)}>
+          <div
+            className={cn(styles.trackPlayLike, styles.btnIcon, {
+              [styles.liked]: isLiked && animateLike,
+              [styles.disliked]: !isLiked && animateLike,
+            })}
+            onClick={handleLikeClick}
+          >
             <svg className={styles.trackPlayLikeSvg}>
-              <use href="img/icon/sprite.svg#icon-like"></use>
-            </svg>
-          </div>
-          <div className={cn(styles.trackPlayDislike, styles.btnIcon)}>
-            <svg className={styles.trackPlayDislikeSvg}>
-              <use href="img/icon/sprite.svg#icon-dislike"></use>
+              <use
+                href={`img/icon/sprite.svg#icon-${
+                  isLiked ? "like" : "dislike"
+                }`}
+              ></use>
             </svg>
           </div>
         </div>
