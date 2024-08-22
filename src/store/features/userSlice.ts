@@ -28,14 +28,30 @@ export const signUp = createAsyncThunk(
     return response;
   }
 );
+
+function getUserFromStorage() {
+  if (localStorage.getItem("user") !== null) {
+    return JSON.parse(localStorage.getItem("user")!);
+  } else {
+    return null;
+  }
+}
+
+function getTokensFromStorage() {
+  if (localStorage.getItem("tokens") !== null) {
+    return JSON.parse(localStorage.getItem("tokens")!);
+  } else {
+    return null;
+  }
+}
 type UserStateType = {
   user: UserType | null;
   tokens: TokenType | null;
 };
 
 const initialState: UserStateType = {
-  user: null,
-  tokens: null,
+  user: getUserFromStorage(),
+  tokens: getTokensFromStorage(),
 };
 
 const userSlice = createSlice({
@@ -45,24 +61,29 @@ const userSlice = createSlice({
     logout: (state) => {
       state.user = null;
       state.tokens = null;
+      localStorage.removeItem("user");
+      localStorage.removeItem("tokens");
     },
   },
   extraReducers: (builder) => {
     builder
       .addCase(signIn.fulfilled, (state, action) => {
         state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(signIn.rejected, (state, action) => {
         console.error("Ошибка входа:", action.error.message);
       })
       .addCase(signUp.fulfilled, (state, action) => {
         state.user = action.payload;
+        localStorage.setItem("user", JSON.stringify(state.user));
       })
       .addCase(signUp.rejected, (state, action) => {
         console.error("Ошибка регистрации:", action.error.message);
       })
       .addCase(getToken.fulfilled, (state, action) => {
         state.tokens = action.payload;
+        localStorage.setItem("tokens", JSON.stringify(state.tokens));
       })
       .addCase(getToken.rejected, (state, action) => {
         console.error("Ошибка получения токена:", action.error.message);
