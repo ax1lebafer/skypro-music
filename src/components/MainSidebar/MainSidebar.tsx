@@ -9,9 +9,9 @@ export function MainSidebar() {
       <SideBarPersonal />
       <div className={styles.sidebarBlock}>
         <div className={styles.sidebarList}>
-          <SidebarItem />
-          <SidebarItem />
-          <SidebarItem />
+          {[1, 2, 3].map((item) => (
+            <SidebarItem key={item} id={item.toString()} />
+          ))}
         </div>
       </div>
     </div>
