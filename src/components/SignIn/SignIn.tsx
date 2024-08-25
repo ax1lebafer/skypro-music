@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./SignIn.module.css";
 import cn from "classnames";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useAppDispatch } from "../../store/store";
 import { getToken, signIn } from "@features/userSlice";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,7 @@ export function SignIn() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -39,7 +40,7 @@ export function SignIn() {
       setError("");
       await dispatch(signIn(userData)).unwrap();
       await dispatch(getToken(userData)).unwrap();
-      router.push("/");
+      router.push("/tracks");
     } catch (error: any) {
       setError(error.message);
     }
@@ -70,14 +71,24 @@ export function SignIn() {
                 value={userData.email}
                 onChange={handleChangeInput}
               />
-              <input
-                className={styles.modalInput}
-                type="password"
-                name="password"
-                placeholder="Пароль"
-                value={userData.password}
-                onChange={handleChangeInput}
-              />
+              <div className={styles.passwordBlock}>
+                <input
+                  className={styles.modalInput}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Пароль"
+                  value={userData.password}
+                  onChange={handleChangeInput}
+                />
+                <Image
+                  className={styles.eye}
+                  src={`/img/eye-${showPassword ? "closed" : "open"}.png`}
+                  alt="eye"
+                  width={20}
+                  height={20}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              </div>
             </div>
             <div className={styles.modalFormBottom}>
               {error && <div className={styles.error}>{error}</div>}
