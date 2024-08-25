@@ -29,7 +29,7 @@ export default function SelectionPage() {
     };
 
     getData();
-  }, []);
+  }, [id]);
 
   return <MainCenterblock tracks={selectionTracks} title={selectionName} />;
 }
