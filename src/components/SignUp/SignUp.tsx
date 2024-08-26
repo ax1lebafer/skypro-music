@@ -13,6 +13,7 @@ export function SignUp() {
 
   const router = useRouter();
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -76,13 +77,23 @@ export function SignUp() {
                 placeholder="Почта"
                 onChange={handleChangeInput}
               />
-              <input
-                className={styles.modalInput}
-                type="password"
-                name="password"
-                placeholder="Пароль"
-                onChange={handleChangeInput}
-              />
+              <div className={styles.passwordBlock}>
+                <input
+                  className={styles.modalInput}
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Пароль"
+                  onChange={handleChangeInput}
+                />
+                <Image
+                  className={styles.eye}
+                  src={`/img/eye-${showPassword ? "closed" : "open"}.png`}
+                  alt="eye"
+                  width={20}
+                  height={20}
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              </div>
               <input
                 className={styles.modalInput}
                 type="text"

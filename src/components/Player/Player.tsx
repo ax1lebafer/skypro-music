@@ -69,7 +69,7 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
       <div className={styles.playerControls}>
         <div className={styles.playerBtnPrev}>
           <svg className={styles.playerBtnPrevSvg} onClick={prevTrack}>
-            <use href="img/icon/sprite.svg#icon-prev"></use>
+            <use href="/img/icon/sprite.svg#icon-prev"></use>
           </svg>
         </div>
         <div className={styles.playerBtnPlay} onClick={togglePlay}>
@@ -77,15 +77,15 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
             <use
               href={
                 isPlaying
-                  ? "img/icon/sprite.svg#icon-pause"
-                  : "img/icon/sprite.svg#icon-play"
+                  ? "/img/icon/sprite.svg#icon-pause"
+                  : "/img/icon/sprite.svg#icon-play"
               }
             ></use>
           </svg>
         </div>
         <div className={styles.playerBtnNext} onClick={nextTrack}>
           <svg className={styles.playerBtnNextSvg}>
-            <use href="img/icon/sprite.svg#icon-next"></use>
+            <use href="/img/icon/sprite.svg#icon-next"></use>
           </svg>
         </div>
         <div
@@ -97,7 +97,7 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
               [styles.active]: isLoop,
             })}
           >
-            <use href="img/icon/sprite.svg#icon-repeat"></use>
+            <use href="/img/icon/sprite.svg#icon-repeat"></use>
           </svg>
         </div>
         <div
@@ -109,7 +109,7 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
               [styles.active]: isShuffle,
             })}
           >
-            <use href="img/icon/sprite.svg#icon-shuffle"></use>
+            <use href="/img/icon/sprite.svg#icon-shuffle"></use>
           </svg>
         </div>
       </div>
@@ -118,7 +118,7 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
         <div className={styles.trackPlayContain}>
           <div className={styles.trackPlayImage}>
             <svg className={styles.trackPlaySvg}>
-              <use href="img/icon/sprite.svg#icon-note"></use>
+              <use href="/img/icon/sprite.svg#icon-note"></use>
             </svg>
           </div>
           <div className={styles.trackPlayAuthor}>
@@ -143,7 +143,7 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
           >
             <svg className={styles.trackPlayLikeSvg}>
               <use
-                href={`img/icon/sprite.svg#icon-${
+                href={`/img/icon/sprite.svg#icon-${
                   isLiked ? "like" : "dislike"
                 }`}
               ></use>
