@@ -4,11 +4,13 @@ import Image from "next/image";
 import styles from "./MainNavigation.module.css";
 import { useState } from "react";
 import Link from "next/link";
-import { useAppSelector } from "../../store/store";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setSearch } from "@features/filterSlice";
 
 export function MainNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const isAuth = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
 
   return (
     <nav className={styles.mainNav}>
@@ -33,13 +35,21 @@ export function MainNavigation() {
         <div className={styles.navMenu}>
           <ul className={styles.menuList}>
             <li className={styles.menuItem}>
-              <Link href="/tracks" className={styles.menuLink}>
+              <Link
+                href="/tracks"
+                className={styles.menuLink}
+                onClick={() => dispatch(setSearch(""))}
+              >
                 Главное
               </Link>
             </li>
             {isAuth && (
               <li className={styles.menuItem}>
-                <Link href="/tracks/favorite" className={styles.menuLink}>
+                <Link
+                  href="/tracks/favorite"
+                  className={styles.menuLink}
+                  onClick={() => dispatch(setSearch(""))}
+                >
                   Мой плейлист
                 </Link>
               </li>

@@ -1,27 +1,40 @@
+"use client";
+
 import styles from "./page.module.css";
-import { TrackType } from "../../types/track";
-import { getTracks } from "@api/tracksApi";
 import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { getAllTracks } from "@features/tracksSlice";
+import { useFilteredTracks } from "../../hooks/useFilteredTracks";
 
-export default async function Home() {
-  let tracks: TrackType[] = [];
-  let errorMessage = "";
+export default function Home() {
+  const dispatch = useAppDispatch();
+  const { allTracks } = useAppSelector((state) => state.playlist);
+  const [error, setError] = useState<null | string>(null);
 
-  try {
-    tracks = await getTracks();
-  } catch (error: unknown) {
-    errorMessage =
-      error instanceof Error
-        ? "Возникли проблемы при загрузке треков: " + error.message
-        : "Неизвестная ошибка";
-  }
+  const filteredTracks = useFilteredTracks(allTracks);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await dispatch(getAllTracks()).unwrap();
+        setError(null);
+      } catch (error: unknown) {
+        error instanceof Error
+          ? setError(error.message)
+          : setError("Неизвестная ошибка");
+      }
+    };
+
+    getData();
+  }, [dispatch]);
 
   return (
     <>
-      {errorMessage ? (
-        <div className={styles.error}>{errorMessage}</div>
+      {error ? (
+        <div className={styles.error}>{error}</div>
       ) : (
-        <MainCenterblock tracks={tracks} title={"Все треки"} />
+        <MainCenterblock tracks={filteredTracks} title={"Все треки"} />
       )}
     </>
   );

@@ -2,13 +2,13 @@ import { fetchFavoriteTracks, getTracks } from "@api/tracksApi";
 import { TrackType } from "@models/track";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// export const getAllTracks = createAsyncThunk(
-//   "tracks/getAllTracks",
-//   async () => {
-//     const response = await getTracks();
-//     return response;
-//   }
-// );
+export const getAllTracks = createAsyncThunk(
+  "tracks/getAllTracks",
+  async () => {
+    const response = await getTracks();
+    return response;
+  }
+);
 
 export const getFavoriteTracks = createAsyncThunk(
   "tracks/getFavorite",
@@ -20,7 +20,7 @@ export const getFavoriteTracks = createAsyncThunk(
 );
 
 type PlaylistStateType = {
-  // allTracks: TrackType[];
+  allTracks: TrackType[];
   currentTrack: TrackType | null;
   initialPlaylist: TrackType[];
   playlist: TrackType[];
@@ -30,7 +30,7 @@ type PlaylistStateType = {
   likedTracks: TrackType[];
 };
 const initialState: PlaylistStateType = {
-  // allTracks: [],
+  allTracks: [],
   currentTrack: null,
   initialPlaylist: [],
   playlist: [],
@@ -104,9 +104,9 @@ const playlistSlice = createSlice({
       .addCase(getFavoriteTracks.fulfilled, (state, action) => {
         state.likedTracks = action.payload;
       })
-      // .addCase(getAllTracks.fulfilled, (state, action) => {
-      //   state.allTracks = action.payload;
-      // });
+      .addCase(getAllTracks.fulfilled, (state, action) => {
+        state.allTracks = action.payload;
+      });
   },
 });
 

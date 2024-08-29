@@ -2,10 +2,11 @@
 
 import { MainCenterblock } from "@components/MainCenterblock/MainCenterblock";
 import { useAppSelector } from "../../../store/store";
-import styles from "./page.module.css";
+import { useFilteredTracks } from "../../../hooks/useFilteredTracks";
 
 export default function FavoritePage() {
   const favoriteTracks = useAppSelector((state) => state.playlist.likedTracks);
+  const filteredTracks = useFilteredTracks(favoriteTracks);
 
-  return <MainCenterblock tracks={favoriteTracks} title={"Мои треки"} />;
+  return <MainCenterblock tracks={filteredTracks} title={"Мои треки"} />;
 }
