@@ -7,9 +7,9 @@ export function useFilteredTracks(tracks: TrackType[]) {
   let filteredTracks = tracks;
 
   if (search) {
-    return filteredTracks = tracks.filter((track) =>
+    return (filteredTracks = tracks.filter((track) =>
       track.name.toLowerCase().includes(search.toLowerCase())
-    );
+    ));
   }
 
   return filteredTracks;
