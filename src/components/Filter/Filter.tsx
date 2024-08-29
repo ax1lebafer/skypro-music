@@ -5,6 +5,8 @@ import styles from "./Filter.module.css";
 import { FilterItem } from "@components/FilterItem/FilterItem";
 import { getUniqueValues } from "@utils/getUniqueValues";
 import { TrackType } from "@models/track";
+import { useAppSelector } from "../../store/store";
+import Skeleton from "react-loading-skeleton";
 
 const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
 
@@ -14,6 +16,7 @@ type FilterProps = {
 
 export function Filter({ tracks }: FilterProps) {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const { isLoading } = useAppSelector((state) => state.playlist);
 
   function handleChangeFilter(filterName: string) {
     setActiveFilter((prevState) =>
@@ -41,16 +44,31 @@ export function Filter({ tracks }: FilterProps) {
 
   return (
     <div className={styles.centerblockFilter}>
-      <div className={styles.filterTitle}>Искать по:</div>
-      {filterNames.map((filterName, index) => (
-        <FilterItem
-          filterName={filterName}
-          key={index}
-          isActive={activeFilter === filterName}
-          handleChangeFilter={handleChangeFilter}
-          list={uniqueValues}
+      <div className={styles.filterTitle}>
+        {isLoading ? <Skeleton width={86} height={24} /> : "Искать по:"}
+      </div>
+      {isLoading && (
+        <Skeleton
+          width={156}
+          height={38}
+          count={3}
+          containerClassName={styles.skeletonContainer}
+          style={{ borderRadius: "60px" }}
         />
-      ))}
+      )}
+      {!isLoading && (
+        <>
+          {filterNames.map((filterName, index) => (
+            <FilterItem
+              filterName={filterName}
+              key={index}
+              isActive={activeFilter === filterName}
+              handleChangeFilter={handleChangeFilter}
+              list={uniqueValues}
+            />
+          ))}
+        </>
+      )}
     </div>
   );
 }

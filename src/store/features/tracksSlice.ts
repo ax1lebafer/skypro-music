@@ -1,5 +1,9 @@
-import { fetchFavoriteTracks, getTracks } from "@api/tracksApi";
-import { TrackType } from "@models/track";
+import {
+  fetchFavoriteTracks,
+  fetchSelectionTracks,
+  getTracks,
+} from "@api/tracksApi";
+import { SelectionTracks, TrackType } from "@models/track";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const getAllTracks = createAsyncThunk(
@@ -19,8 +23,19 @@ export const getFavoriteTracks = createAsyncThunk(
   }
 );
 
+export const getSelectionTracks = createAsyncThunk(
+  "tracks/getSelection",
+  async (id: string): Promise<SelectionTracks> => {
+    const response = await fetchSelectionTracks(id);
+
+    return response;
+  }
+);
+
 type PlaylistStateType = {
   allTracks: TrackType[];
+  selectionTracks: TrackType[];
+  selectionName: string;
   currentTrack: TrackType | null;
   initialPlaylist: TrackType[];
   playlist: TrackType[];
@@ -28,9 +43,13 @@ type PlaylistStateType = {
   isShuffle: boolean;
   isLoop: boolean;
   likedTracks: TrackType[];
+  isLoading: boolean;
+  error: string | null;
 };
 const initialState: PlaylistStateType = {
   allTracks: [],
+  selectionTracks: [],
+  selectionName: "",
   currentTrack: null,
   initialPlaylist: [],
   playlist: [],
@@ -38,6 +57,8 @@ const initialState: PlaylistStateType = {
   isShuffle: false,
   isLoop: false,
   likedTracks: [],
+  isLoading: true,
+  error: null,
 };
 
 const playlistSlice = createSlice({
@@ -98,14 +119,54 @@ const playlistSlice = createSlice({
         (track) => track._id !== action.payload._id
       );
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(getFavoriteTracks.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
       .addCase(getFavoriteTracks.fulfilled, (state, action) => {
         state.likedTracks = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getFavoriteTracks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Ошибка загрузки любимых треков";
+      })
+      .addCase(getAllTracks.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(getAllTracks.fulfilled, (state, action) => {
         state.allTracks = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getAllTracks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Ошибка загрузки треков";
+      })
+      .addCase(getSelectionTracks.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(
+        getSelectionTracks.fulfilled,
+        (state, action: PayloadAction<SelectionTracks>) => {
+          state.selectionTracks = state.allTracks.filter((track) =>
+            action.payload.items.includes(track._id)
+          );
+          state.selectionName = action.payload.name;
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+      .addCase(getSelectionTracks.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message || "Ошибка загрузки подборки";
       });
   },
 });
@@ -119,5 +180,6 @@ export const {
   setDislike,
   setLike,
   setIsLoop,
+  setIsLoading,
 } = playlistSlice.actions;
 export const playlistReducer = playlistSlice.reducer;

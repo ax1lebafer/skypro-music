@@ -71,7 +71,7 @@ export async function removeLikeTrack(token: string, id: number) {
   return data.data;
 }
 
-export async function getSelectionTracks(id: string) {
+export async function fetchSelectionTracks(id: string) {
   const fullId = Number(id) + 1;
   const response = await fetch(
     `https://webdev-music-003b5b991590.herokuapp.com/catalog/selection/${fullId}/`
