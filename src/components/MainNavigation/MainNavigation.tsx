@@ -5,7 +5,7 @@ import styles from "./MainNavigation.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { resetFilter, setSearch } from "@features/filterSlice";
+import { resetFilter } from "@features/filterSlice";
 
 export function MainNavigation() {
   const [isOpen, setIsOpen] = useState(false);
