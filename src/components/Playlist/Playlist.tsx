@@ -12,7 +12,7 @@ type PlaylistProps = {
 
 export function Playlist({ tracks }: PlaylistProps) {
   const { isLoading } = useAppSelector((state) => state.playlist);
-  
+
   return (
     <div className={styles.contentPlaylist}>
       {isLoading && (

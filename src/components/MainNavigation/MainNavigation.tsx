@@ -5,7 +5,7 @@ import styles from "./MainNavigation.module.css";
 import { useState } from "react";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import { setSearch } from "@features/filterSlice";
+import { resetFilter, setSearch } from "@features/filterSlice";
 
 export function MainNavigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export function MainNavigation() {
               <Link
                 href="/tracks"
                 className={styles.menuLink}
-                onClick={() => dispatch(setSearch(""))}
+                onClick={() => dispatch(resetFilter())}
               >
                 Главное
               </Link>
@@ -48,7 +48,7 @@ export function MainNavigation() {
                 <Link
                   href="/tracks/favorite"
                   className={styles.menuLink}
-                  onClick={() => dispatch(setSearch(""))}
+                  onClick={() => dispatch(resetFilter())}
                 >
                   Мой плейлист
                 </Link>

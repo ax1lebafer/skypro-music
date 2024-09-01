@@ -4,7 +4,7 @@ import Image from "next/image";
 import styles from "./SidebarItem.module.css";
 import Link from "next/link";
 import { useAppDispatch } from "../../store/store";
-import { setSearch } from "@features/filterSlice";
+import { resetFilter, setSearch } from "@features/filterSlice";
 
 type SidebarItemProps = {
   id: string;
@@ -18,7 +18,7 @@ export function SidebarItem({ id }: SidebarItemProps) {
       <Link
         className={styles.sidebarLink}
         href={`/tracks/selection/${id}`}
-        onClick={() => dispatch(setSearch(""))}
+        onClick={() => dispatch(resetFilter())}
       >
         <Image
           className={styles.sidebarImg}

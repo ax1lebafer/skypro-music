@@ -6,6 +6,8 @@ type FilterItemProps = {
   isActive: boolean;
   handleChangeFilter: (filterName: string) => void;
   list: string[];
+  handleSelectValue: (value: string) => void;
+  selectedValues: string[];
 };
 
 export function FilterItem({
@@ -13,6 +15,8 @@ export function FilterItem({
   isActive,
   handleChangeFilter,
   list,
+  handleSelectValue,
+  selectedValues,
 }: FilterItemProps) {
   const filteredList = list
     .filter((item) => item !== null && item !== "" && item !== "-")
@@ -35,7 +39,13 @@ export function FilterItem({
         <div className={styles.listWrapper}>
           <ul className={styles.list}>
             {filteredList.map((listName, index) => (
-              <li className={styles.listItem} key={index}>
+              <li
+                className={cn(styles.listItem, {
+                  [styles.selected]: selectedValues.includes(listName),
+                })}
+                key={index}
+                onClick={() => handleSelectValue(listName)}
+              >
                 {listName}
               </li>
             ))}
