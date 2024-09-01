@@ -22,7 +22,7 @@ export function MainCenterblock({ tracks, title }: MainCenterblockProps) {
       <h2 className={styles.centerblockH2}>
         {isLoading ? <Skeleton /> : title}
       </h2>
-      <Filter tracks={tracks} />
+      <Filter />
       <PlaylistContent tracks={tracks} />
     </>
   );

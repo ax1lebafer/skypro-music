@@ -7,7 +7,7 @@ import { setCurrentTrack } from "@features/tracksSlice";
 import { useAppDispatch, useAppSelector } from "../../store/store";
 import cn from "classnames";
 import { useLikeTrack } from "../../hooks/useLikeTrack";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 type TrackProps = {
   track: TrackType;
@@ -24,18 +24,21 @@ export function Track({ track, tracks }: TrackProps) {
 
   const [animateLike, setAnimateLike] = useState(false);
 
-  function handleSelectTrack() {
+  const handleSelectTrack = useCallback(() => {
     dispatch(setCurrentTrack({ currentTrack: track, playlist: tracks }));
-  }
+  }, [dispatch, track, tracks]);
 
-  function handleLikeClick(event: React.MouseEvent<HTMLDivElement>) {
-    setAnimateLike(true);
-    handleLike(event);
+  const handleLikeClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      setAnimateLike(true);
+      handleLike(event);
 
-    setTimeout(() => {
-      setAnimateLike(false);
-    }, 300);
-  }
+      setTimeout(() => {
+        setAnimateLike(false);
+      }, 300);
+    },
+    [handleLike]
+  );
 
   return (
     <div className={styles.playlistItem} onClick={handleSelectTrack}>

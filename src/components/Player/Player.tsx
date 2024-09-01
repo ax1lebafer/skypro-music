@@ -10,7 +10,7 @@ import {
   setPrevTrack,
 } from "@features/tracksSlice";
 import { useLikeTrack } from "../../hooks/useLikeTrack";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 type PlayerProps = {
   track: TrackType | null;
@@ -29,40 +29,43 @@ export function Player({ track, togglePlay, handleLoop }: PlayerProps) {
 
   const [animateLike, setAnimateLike] = useState(false);
 
-  function handleLikeClick(event: React.MouseEvent<HTMLDivElement>) {
-    setAnimateLike(true);
-    handleLike(event);
+  const handleLikeClick = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      setAnimateLike(true);
+      handleLike(event);
 
-    setTimeout(() => {
-      setAnimateLike(false);
-    }, 300);
-  }
+      setTimeout(() => {
+        setAnimateLike(false);
+      }, 300);
+    },
+    [handleLike]
+  );
 
-  const nextTrack = () => {
-    const playlist = isShuffle
+  const playlist = useMemo(() => {
+    return isShuffle
       ? [...initialPlaylist].sort(() => Math.random() - 0.5)
       : initialPlaylist;
+  }, [isShuffle, initialPlaylist]);
+
+  const nextTrack = useCallback(() => {
     const currentIndex = playlist.findIndex((t) => t._id === track?._id);
 
     if (currentIndex < playlist.length - 1) {
       dispatch(setNextTrack());
     }
-  };
+  }, [playlist, track?._id, dispatch]);
 
-  const prevTrack = () => {
-    const playlist = isShuffle
-      ? [...initialPlaylist].sort(() => Math.random() - 0.5)
-      : initialPlaylist;
+  const prevTrack = useCallback(() => {
     const currentIndex = playlist.findIndex((t) => t._id === track?._id);
 
     if (currentIndex > 0) {
       dispatch(setPrevTrack());
     }
-  };
+  }, [playlist, track?._id, dispatch]);
 
-  const toggleShuffle = () => {
+  const toggleShuffle = useCallback(() => {
     dispatch(setIsShuffle(isShuffle ? false : true));
-  };
+  }, [isShuffle, dispatch]);
 
   return (
     <div className={styles.player}>

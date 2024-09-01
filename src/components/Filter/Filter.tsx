@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./Filter.module.css";
 import { FilterItem } from "@components/FilterItem/FilterItem";
 import { getUniqueValues } from "@utils/getUniqueValues";
@@ -11,39 +11,39 @@ import { setAuthor, setDateOrder, setGenre } from "@features/filterSlice";
 
 const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
 
-type FilterProps = {
-  tracks: TrackType[];
-};
-
-export function Filter({ tracks }: FilterProps) {
+export function Filter() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const tracks = useAppSelector((state) => state.playlist.allTracks);
   const { isLoading } = useAppSelector((state) => state.playlist);
   const { authors, genres, dateOrder } = useAppSelector(
     (state) => state.filters
   );
   const dispatch = useAppDispatch();
 
-  function handleChangeFilter(filterName: string) {
+  const handleChangeFilter = useCallback((filterName: string) => {
     setActiveFilter((prevState) =>
       prevState === filterName ? null : filterName
     );
-  }
+  }, []);
 
-  function handleSelectValue(value: string) {
-    if (activeFilter === "исполнителю") {
-      dispatch(setAuthor(value));
-    }
+  const handleSelectValue = useCallback(
+    (value: string) => {
+      if (activeFilter === "исполнителю") {
+        dispatch(setAuthor(value));
+      }
 
-    if (activeFilter === "жанру") {
-      dispatch(setGenre(value));
-    }
+      if (activeFilter === "жанру") {
+        dispatch(setGenre(value));
+      }
 
-    if (activeFilter === "году выпуска") {
-      dispatch(setDateOrder(value));
-    }
-  }
+      if (activeFilter === "году выпуска") {
+        dispatch(setDateOrder(value));
+      }
+    },
+    [activeFilter, dispatch]
+  );
 
-  function getUnique(): string[] {
+  const uniqueValues = useMemo(() => {
     if (activeFilter === "исполнителю") {
       return getUniqueValues(tracks, "author");
     }
@@ -57,9 +57,7 @@ export function Filter({ tracks }: FilterProps) {
     }
 
     return [];
-  }
-
-  const uniqueValues = getUnique();
+  }, [activeFilter, tracks]);
 
   return (
     <div className={styles.centerblockFilter}>

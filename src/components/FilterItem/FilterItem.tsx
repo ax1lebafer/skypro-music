@@ -18,12 +18,6 @@ export function FilterItem({
   handleSelectValue,
   selectedValues,
 }: FilterItemProps) {
-  const filteredList = list
-    .filter((item) => item !== null && item !== "" && item !== "-")
-    .map((item) => {
-      return item;
-    })
-    .filter((item) => item !== "");
 
   return (
     <div className={styles.filter}>
@@ -38,7 +32,7 @@ export function FilterItem({
       {isActive && (
         <div className={styles.listWrapper}>
           <ul className={styles.list}>
-            {filteredList.map((listName, index) => (
+            {list.map((listName, index) => (
               <li
                 className={cn(styles.listItem, {
                   [styles.selected]: selectedValues.includes(listName),
