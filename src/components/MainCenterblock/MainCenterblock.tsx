@@ -24,7 +24,12 @@ export function MainCenterblock({ tracks, title }: MainCenterblockProps) {
       </h2>
       <Filter />
       {isLoading ? (
-        <Skeleton count={5} height={30} style={{ marginTop: "20px" }} />
+        <Skeleton
+          count={20}
+          width="100%"
+          height={51}
+          style={{ marginBottom: "12px" }}
+        />
       ) : tracks.length > 0 ? (
         <PlaylistContent tracks={tracks} />
       ) : (

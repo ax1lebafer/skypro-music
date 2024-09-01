@@ -4,12 +4,16 @@ import { useCallback, useMemo, useState } from "react";
 import styles from "./Filter.module.css";
 import { FilterItem } from "@components/FilterItem/FilterItem";
 import { getUniqueValues } from "@utils/getUniqueValues";
-import { TrackType } from "@models/track";
 import { useAppDispatch, useAppSelector } from "../../store/store";
-import Skeleton from "react-loading-skeleton";
 import { setAuthor, setDateOrder, setGenre } from "@features/filterSlice";
 
-const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
+import Skeleton from "react-loading-skeleton";
+
+const filterNames: { title: string; value: string }[] = [
+  { title: "исполнителю", value: "author" },
+  { title: "году выпуска", value: "order" },
+  { title: "жанру", value: "genre" },
+];
 
 export function Filter() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
@@ -75,25 +79,33 @@ export function Filter() {
       )}
       {!isLoading && (
         <>
-          {filterNames.map((filterName, index) => (
-            <FilterItem
-              filterName={filterName}
-              key={index}
-              isActive={activeFilter === filterName}
-              handleChangeFilter={handleChangeFilter}
-              list={uniqueValues}
-              handleSelectValue={handleSelectValue}
-              selectedValues={
-                filterName === "исполнителю"
-                  ? authors
-                  : filterName === "жанру"
-                  ? genres
-                  : filterName === "году выпуска"
-                  ? [dateOrder]
-                  : []
-              }
-            />
-          ))}
+          {filterNames.map((filter, index) => {
+            const selectedCount =
+              filter.value === "author"
+                ? authors.length
+                : filter.value === "genre"
+                ? genres.length
+                : 0;
+
+            return (
+              <FilterItem
+                filterName={filter.title}
+                key={index}
+                isActive={activeFilter === filter.title}
+                handleChangeFilter={handleChangeFilter}
+                list={uniqueValues}
+                handleSelectValue={handleSelectValue}
+                selectedValues={
+                  filter.value === "author"
+                    ? authors
+                    : filter.value === "genre"
+                    ? genres
+                    : []
+                }
+                selectedCount={selectedCount}
+              />
+            );
+          })}
         </>
       )}
     </div>

@@ -4,21 +4,22 @@ import styles from "./FilterItem.module.css";
 type FilterItemProps = {
   filterName: string;
   isActive: boolean;
-  handleChangeFilter: (filterName: string) => void;
   list: string[];
-  handleSelectValue: (value: string) => void;
   selectedValues: string[];
+  selectedCount: number;
+  handleChangeFilter: (filterName: string) => void;
+  handleSelectValue: (value: string) => void;
 };
 
 export function FilterItem({
   filterName,
   isActive,
-  handleChangeFilter,
   list,
-  handleSelectValue,
   selectedValues,
+  selectedCount,
+  handleChangeFilter,
+  handleSelectValue,
 }: FilterItemProps) {
-
   return (
     <div className={styles.filter}>
       <div
@@ -28,6 +29,9 @@ export function FilterItem({
         })}
       >
         {filterName}
+        {selectedCount > 0 && (
+          <span className={styles.selectedCount}>{selectedCount}</span>
+        )}
       </div>
       {isActive && (
         <div className={styles.listWrapper}>

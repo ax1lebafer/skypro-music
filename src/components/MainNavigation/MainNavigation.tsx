@@ -21,6 +21,7 @@ export function MainNavigation() {
           alt="logo"
           width={113}
           height={17}
+          priority
         />
       </div>
       <div
