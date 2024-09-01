@@ -23,7 +23,13 @@ export function MainCenterblock({ tracks, title }: MainCenterblockProps) {
         {isLoading ? <Skeleton /> : title}
       </h2>
       <Filter />
-      <PlaylistContent tracks={tracks} />
+      {isLoading ? (
+        <Skeleton count={5} height={30} style={{ marginTop: "20px" }} />
+      ) : tracks.length > 0 ? (
+        <PlaylistContent tracks={tracks} />
+      ) : (
+        <p className={styles.noTracksMessage}>Треки не найдены</p>
+      )}
     </>
   );
 }
