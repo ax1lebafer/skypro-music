@@ -1,5 +1,6 @@
 import cn from "classnames";
 import styles from "./FilterItem.module.css";
+import { memo } from "react";
 
 type FilterItemProps = {
   filterName: string;
@@ -11,7 +12,7 @@ type FilterItemProps = {
   handleSelectValue: (value: string) => void;
 };
 
-export function FilterItem({
+export const FilterItem = memo(function FilterItem({
   filterName,
   isActive,
   list,
@@ -52,4 +53,4 @@ export function FilterItem({
       )}
     </div>
   );
-}
+});

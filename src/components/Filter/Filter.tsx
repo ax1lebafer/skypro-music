@@ -19,9 +19,7 @@ export function Filter() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const tracks = useAppSelector((state) => state.playlist.allTracks);
   const { isLoading } = useAppSelector((state) => state.playlist);
-  const { authors, genres, dateOrder } = useAppSelector(
-    (state) => state.filters
-  );
+  const { authors, genres } = useAppSelector((state) => state.filters);
   const dispatch = useAppDispatch();
 
   const handleChangeFilter = useCallback((filterName: string) => {
