@@ -1,5 +1,3 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-
 const loginUrl = "https://webdev-music-003b5b991590.herokuapp.com/user/login/";
 const registerUrl =
   "https://webdev-music-003b5b991590.herokuapp.com/user/signup/";

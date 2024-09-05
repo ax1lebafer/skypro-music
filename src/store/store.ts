@@ -1,3 +1,4 @@
+import { filterReducer } from "@features/filterSlice";
 import { playlistReducer } from "@features/tracksSlice";
 import { userReducer } from "@features/userSlice";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -14,6 +15,7 @@ export const makeStore = () => {
     reducer: combineReducers({
       playlist: playlistReducer,
       user: userReducer,
+      filters: filterReducer,
     }),
   });
 };

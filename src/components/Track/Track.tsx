@@ -24,18 +24,18 @@ export function Track({ track, tracks }: TrackProps) {
 
   const [animateLike, setAnimateLike] = useState(false);
 
-  function handleSelectTrack() {
+  const handleSelectTrack = () => {
     dispatch(setCurrentTrack({ currentTrack: track, playlist: tracks }));
-  }
+  };
 
-  function handleLikeClick(event: React.MouseEvent<HTMLDivElement>) {
+  const handleLikeClick = (event: React.MouseEvent<HTMLDivElement>) => {
     setAnimateLike(true);
     handleLike(event);
 
     setTimeout(() => {
       setAnimateLike(false);
     }, 300);
-  }
+  };
 
   return (
     <div className={styles.playlistItem} onClick={handleSelectTrack}>

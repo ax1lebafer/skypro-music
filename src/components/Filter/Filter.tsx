@@ -1,27 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import styles from "./Filter.module.css";
 import { FilterItem } from "@components/FilterItem/FilterItem";
 import { getUniqueValues } from "@utils/getUniqueValues";
-import { TrackType } from "@models/track";
+import { useAppDispatch, useAppSelector } from "../../store/store";
+import { setAuthor, setDateOrder, setGenre } from "@features/filterSlice";
 
-const filterNames: string[] = ["исполнителю", "году выпуска", "жанру"];
+import Skeleton from "react-loading-skeleton";
 
-type FilterProps = {
-  tracks: TrackType[];
-};
+const filterNames: { title: string; value: string }[] = [
+  { title: "исполнителю", value: "author" },
+  { title: "году выпуска", value: "order" },
+  { title: "жанру", value: "genre" },
+];
 
-export function Filter({ tracks }: FilterProps) {
+export function Filter() {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const tracks = useAppSelector((state) => state.playlist.allTracks);
+  const { isLoading } = useAppSelector((state) => state.playlist);
+  const { authors, genres } = useAppSelector((state) => state.filters);
+  const dispatch = useAppDispatch();
 
-  function handleChangeFilter(filterName: string) {
+  const handleChangeFilter = useCallback((filterName: string) => {
     setActiveFilter((prevState) =>
       prevState === filterName ? null : filterName
     );
-  }
+  }, []);
 
-  function getUnique(): string[] {
+  const handleSelectValue = useCallback(
+    (value: string) => {
+      if (activeFilter === "исполнителю") {
+        dispatch(setAuthor(value));
+      }
+
+      if (activeFilter === "жанру") {
+        dispatch(setGenre(value));
+      }
+
+      if (activeFilter === "году выпуска") {
+        dispatch(setDateOrder(value));
+      }
+    },
+    [activeFilter, dispatch]
+  );
+
+  const uniqueValues = useMemo(() => {
     if (activeFilter === "исполнителю") {
       return getUniqueValues(tracks, "author");
     }
@@ -35,22 +59,53 @@ export function Filter({ tracks }: FilterProps) {
     }
 
     return [];
-  }
-
-  const uniqueValues = getUnique();
+  }, [activeFilter, tracks]);
 
   return (
     <div className={styles.centerblockFilter}>
-      <div className={styles.filterTitle}>Искать по:</div>
-      {filterNames.map((filterName, index) => (
-        <FilterItem
-          filterName={filterName}
-          key={index}
-          isActive={activeFilter === filterName}
-          handleChangeFilter={handleChangeFilter}
-          list={uniqueValues}
+      <div className={styles.filterTitle}>
+        {isLoading ? <Skeleton width={86} height={24} /> : "Искать по:"}
+      </div>
+      {isLoading && (
+        <Skeleton
+          width={156}
+          height={38}
+          count={3}
+          containerClassName={styles.skeletonContainer}
+          style={{ borderRadius: "60px" }}
         />
-      ))}
+      )}
+      {!isLoading && (
+        <>
+          {filterNames.map((filter, index) => {
+            const selectedCount =
+              filter.value === "author"
+                ? authors.length
+                : filter.value === "genre"
+                ? genres.length
+                : 0;
+
+            return (
+              <FilterItem
+                filterName={filter.title}
+                key={index}
+                isActive={activeFilter === filter.title}
+                handleChangeFilter={handleChangeFilter}
+                list={uniqueValues}
+                handleSelectValue={handleSelectValue}
+                selectedValues={
+                  filter.value === "author"
+                    ? authors
+                    : filter.value === "genre"
+                    ? genres
+                    : []
+                }
+                selectedCount={selectedCount}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 }
